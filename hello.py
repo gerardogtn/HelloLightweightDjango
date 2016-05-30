@@ -1,10 +1,19 @@
+import os
 import sys
 
 from django.conf import settings
 
+## Read debug environment variable.
+DEBUG = os.environ.get('DEBUG', 'on') == 'on'
+## Generate random secret key every time the server starts
+SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
+## Get allowed hosts (list split by commas) from environment variable.
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+
 settings.configure(
-    DEBUG=True,
-    SECRET_KEY='thisisthesecretkey',
+    DEBUG=DEBUG,
+    SECRET_KEY=SECRET_KEY,
+    ALLOWED_HOSTS=ALLOWED_HOSTS,
     ROOT_URLCONF=__name__,
     MIDDLEWARE_CLASSES=(
         'django.middleware.common.CommonMiddleware',
